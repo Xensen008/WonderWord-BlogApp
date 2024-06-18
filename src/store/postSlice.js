@@ -14,11 +14,24 @@ const postSlice = createSlice({
     setPosts(state, action) {
       state.posts = action.payload;
     },
-    savedPosts(state, action) {
-      state.savedPosts = action.payload;
-    }
-  }
+    setSavedPosts(state, action){
+      state.savedPosts = action.payload
+    },
+    toggleSavePost(state, action) {
+      if (typeof action.payload === "object") {
+        const post = action.payload;
+        const isPostSaved = state.savedPosts.some(savedPost => savedPost.$id === post.$id);
+
+        if (isPostSaved) {
+          state.savedPosts = state.savedPosts.filter((savedPost) => savedPost.$id !== post.$id);
+        } else {
+          state.savedPosts.push(post);
+        }
+      }
+    },
+  },
 });
-export const { setPosts } = postSlice.actions;
+
+export const { setPosts, toggleSavePost, setSavedPosts } = postSlice.actions;
 
 export default postSlice.reducer;

@@ -15,7 +15,7 @@ import EditPost from "./pages/EditPost";
 
 import Post from "./pages/Post";
 
-import AllPosts from "./pages/AllPost.jsx";
+import SavedPage from './pages/SavePage.jsx'
 
 const router = createBrowserRouter([
   {
@@ -42,15 +42,15 @@ const router = createBrowserRouter([
                 </AuthLayout>
             ),
         },
-        // {
-        //     path: "/all-posts",
-        //     element: (
-        //         <AuthLayout authentication>
-        //             {" "}
-        //             <AllPosts />
-        //         </AuthLayout>
-        //     ),
-        // },
+        {
+            path: "/saved-posts",
+            element: (
+                <AuthLayout authentication>
+                    {" "}
+                    <SavedPage />
+                </AuthLayout>
+            ),
+        },
         {
             path: "/add-post",
             element: (
