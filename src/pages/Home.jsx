@@ -14,14 +14,13 @@ function Home() {
     
 
     useEffect(() => {
-        appwriteService.getPosts().then((post) => {
-            if (post) {
-                dispatch(setPosts(posts.documents));
-                if(posts && posts.length===0 ) dispatch(setPosts(post.documents))
-            }
-            setIsLoading(false); 
-        })
-    }, [])
+    appwriteService.getPosts().then((post) => {
+        if (post) {
+            dispatch(setPosts(post.documents));
+        }
+        setIsLoading(false); 
+    })
+}, [])
 
     if (isLoading) {
         return <LoadingSpinner />; // Render LoadingSpinner if isLoading is true
