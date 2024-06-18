@@ -2,15 +2,24 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import appwriteService from "../appwrite/config";
 import parse from "html-react-parser";
-import { FaHeart} from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { IconContext } from "react-icons";
 import { formatDistanceToNow } from "date-fns";
+import {useDispatch} from  "react-redux";
 
 function PostCard({ $id, title, featuredImage, content }) {
     const truncatedContent = content.length > 180 ? `${content.substring(0, 180)}...` : content;
 
+    const [isSaved, setIsSaved] = useState(false);
+
+    const handleSavePost = () => {
+        setIsSaved(!isSaved);
+        dispatch(savePost({$id, title, featuredImage,content}))
+
+    }
+
     return (
-       <div className="group p-3 w-full rounded-xl overflow-hidden flex flex-col md:flex-row bg-gray-100 dark:bg-[#ecf0f8] border border-black">
+        <div className="group p-3 w-full rounded-xl overflow-hidden flex flex-col md:flex-row bg-gray-100 dark:bg-[#ecf0f8] border border-black">
             <Link to={`/post/${$id}`}>
                 <div className="relative rounded-xl overflow-hidden w-full md:w-[20rem] lg:w-60 h-60 flex-none ">
                     <img
@@ -28,11 +37,10 @@ function PostCard({ $id, title, featuredImage, content }) {
                         </h3>
                         <div className="flex flex-row gap-2 items-center justify-center ">
                             <IconContext.Provider value={{ size: "1.5em" }}>
-                                <FaHeart className="text-black dark:text-red-700" />
+                                {isSaved ? <FaHeart className="text-red-700" onClick={handleSavePost} /> : <FaRegHeart className="text-black" onClick={handleSavePost} />}
                             </IconContext.Provider>
                             <span className="text-md dark:text-black-100 text-gray-900">
-                                {/* Replace with the actual number of likes */}
-                                12k
+                                {isSaved ? 'Saved' : 'Save'}
                             </span>
                         </div>
                     </div>
