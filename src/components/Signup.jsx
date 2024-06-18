@@ -10,7 +10,7 @@ function Signup() {
     const navigate = useNavigate()
     const [error, setError] = useState("")
     const dispatch = useDispatch()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit,  formState: { isSubmitting } } = useForm()
 
     const create = async (data) => {
         setError("")
@@ -79,10 +79,11 @@ function Signup() {
 
                     <div>
                         <Button
+                        disabled={isSubmitting}
                             type="submit"
                             className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         >
-                            Sign up
+                           {isSubmitting ? "Creating Account..." : "Sign up"} 
                         </Button>
                     </div>
                 </form>
