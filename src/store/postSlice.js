@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { set } from 'date-fns';
 
 const initialState = {
   posts: [],
@@ -11,27 +12,11 @@ const postSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    fetchPostsStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
-    fetchPostsSuccess: (state, action) => {
+    setPosts(state, action) {
       state.posts = action.payload;
-      state.loading = false;
-    },
-    fetchPostsFailure: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    savePost: (state, action) => {
-      state.savedPosts.push(action.payload);
-    },
-    unsavePost: (state, action) => {
-      state.savedPosts = state.savedPosts.filter(postId => postId !== action.payload);
-    },
-  },
+    }
+  }
 });
-
-export const { fetchPostsStart, fetchPostsSuccess, fetchPostsFailure, savePost } = postSlice.actions;
+export const { setPosts } = postSlice.actions;
 
 export default postSlice.reducer;

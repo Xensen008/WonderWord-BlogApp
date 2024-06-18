@@ -3,21 +3,23 @@ import appwriteService from "../appwrite/config";
 import { Container, PostCard } from '../components'
 import LandingPage from '../components/LandingPage';
 import LoadingSpinner from '../components/Loading/LoadingSpinner'; // Import your LoadingSpinner component
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setPosts } from '../store/postSlice';
 
 function Home() {
-    const [posts, setPosts] = useState([])
+    const posts = useSelector(state => state.posts.posts);
     const [isLoading, setIsLoading] = useState(true); // Add isLoading state
-
+    const dispatch = useDispatch();
     const authStatus = useSelector(state => state.auth.status)
     
 
     useEffect(() => {
-        appwriteService.getPosts().then((posts) => {
-            if (posts) {
-                setPosts(posts.documents)
+        appwriteService.getPosts().then((post) => {
+            if (post) {
+                dispatch(setPosts(posts.documents));
+                if(posts.length===0) dispatch(setPosts(post.documents))
             }
-            setIsLoading(false); // Set isLoading to false after fetching posts
+            setIsLoading(false); 
         })
     }, [])
 
