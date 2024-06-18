@@ -17,7 +17,7 @@ function Home() {
         appwriteService.getPosts().then((post) => {
             if (post) {
                 dispatch(setPosts(posts.documents));
-                if(posts.length===0) dispatch(setPosts(post.documents))
+                if(posts && posts.length===0 ) dispatch(setPosts(post.documents))
             }
             setIsLoading(false); 
         })
