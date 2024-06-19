@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FaHeart, FaRegHeart, FaSave, FaRegSave } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa"; // Import FaBookmark and FaRegBookmark
 import { IconContext } from "react-icons";
 import { useSelector, useDispatch } from 'react-redux';
 import appwriteService from '../appwrite/config';
@@ -30,7 +30,7 @@ function PostStats({ post }) {
             likesArray.push(user.$id);
         }
         setLikes(likesArray);
-        await appwriteService.likePost({postId: post.$id, likes: likesArray});
+        await appwriteService.likePost(post.$id, likesArray);
     };
 
     const handleSavePost = async () => {
@@ -56,7 +56,7 @@ function PostStats({ post }) {
             </div>
             <div>
                 <IconContext.Provider value={{ size: "1.5em" }}>
-                    {checkIfSaved(saves, post.$id) ? <FaSave className="text-red-700" onClick={handleSavePost} /> : <FaRegSave className="text-black" onClick={handleSavePost} />}
+                    {checkIfSaved(saves, post.$id) ? <FaBookmark className="text-red-700" onClick={handleSavePost} /> : <FaRegBookmark className="text-black" onClick={handleSavePost} />} {/* Use FaBookmark and FaRegBookmark */}
                 </IconContext.Provider>
                 <span className="text-md dark:text-black-100 text-gray-900">
                     {checkIfSaved(saves, post.$id) ? 'Saved' : 'Save'}
@@ -65,5 +65,6 @@ function PostStats({ post }) {
         </div>
     )
 }
+
 
 export default PostStats

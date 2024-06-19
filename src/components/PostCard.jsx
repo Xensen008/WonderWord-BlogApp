@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import appwriteService from "../appwrite/config";
 import parse from "html-react-parser";
 import { formatDistanceToNow } from "date-fns";
+import { IconContext } from 'react-icons';
+import { FaHeart} from "react-icons/fa";
 
 
-function PostCard({ $id, title, featuredImage, content }) {
+function PostCard({ $id, title, featuredImage, content, likes ,$createdAt , owner }) {
     const truncatedContent = content.length > 180 ? `${content.substring(0, 180)}...` : content;
 
 
@@ -23,14 +25,14 @@ function PostCard({ $id, title, featuredImage, content }) {
                     <h3 className="text-xl font-bold text-black group-hover:text-gray-600 dark:text-black dark:group-hover:text-black">
                         {title}
                     </h3>
-                    {/* <div className="flex flex-row gap-2 items-center justify-center ">
+                    <div className="flex flex-row gap-2 items-center justify-center ">
                         <IconContext.Provider value={{ size: "1.5em" }}>
-                            {isSaved ? <FaHeart className="text-red-700" onClick={handleSavePost} /> : <FaRegHeart className="text-black" onClick={handleSavePost} />}
+                            <FaHeart className="text-red-700" />
                         </IconContext.Provider>
                         <span className="text-md dark:text-black-100 text-gray-900">
-                            {isSaved ? 'Saved' : 'Save'}
+                            {likes.length}
                         </span>
-                    </div> */}
+                    </div>
                 </div>
                 <div className="min-h-[6rem]">
                     <p className="mt-3 text-black dark:text-black text-left">
@@ -53,7 +55,7 @@ function PostCard({ $id, title, featuredImage, content }) {
                     </svg>
                     <h2 className="text-lg tracking-tight text-black dark:text-black text-left">
                         <span className="text-blacl dark:text-black">
-                            {/* Replace with the actual creation date */}
+                            @{owner.name},
                             {new Date().toLocaleDateString(undefined, {
                                 month: "long",
                                 day: "numeric",
