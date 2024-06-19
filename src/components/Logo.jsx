@@ -14,10 +14,10 @@ function Logo({ textColor = "primary", darkTextColor = "white" }) {
       </div>
       <div
         className={`text-2.5xl font-bold tracking-widest text-theme-color
-rounded-lg focus:outline-none focus:shadow-outline`}
+rounded-lg focus:outline-none focus:shadow-outline text-red-600`}
       >
         Wonder
-        <span className={"text-black "}>
+        <span className={"text-white "}>
           Words
         </span>
       </div>
