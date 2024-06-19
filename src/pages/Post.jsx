@@ -5,6 +5,7 @@ import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
 import {PostStats} from "../components";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -32,6 +33,8 @@ export default function Post() {
             }
         });
     };
+
+    if(!post){return <LoadingSpinner/>}
 
     return post ? (
         <div className="py-8">
