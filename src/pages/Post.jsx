@@ -4,6 +4,7 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import PostStats from "../components";
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -55,12 +56,13 @@ export default function Post() {
                         </div>
                     )}
                 </div>
+                <PostStats post={post} /> {/* Add PostStats component here */}
                 <div className="w-full mb-6">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
                 <div className="browser-css">
                     {parse(post.content)}
-                    </div>
+                </div>
             </Container>
         </div>
     ) : null;
