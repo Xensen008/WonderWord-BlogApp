@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa"; // Import FaBookmark and FaRegBookmark
+import { FaHeart, FaRegHeart, FaBookmark, FaRegBookmark } from "react-icons/fa"
 import { IconContext } from "react-icons";
 import { useSelector, useDispatch } from 'react-redux';
 import appwriteService from '../appwrite/config';
+import  {login} from '../store/authSlice'
 
 function PostStats({ post }) {
     const user = useSelector((state) => state.auth.userData);
@@ -30,7 +31,7 @@ function PostStats({ post }) {
             likesArray.push(user.$id);
         }
         setLikes(likesArray);
-        await appwriteService.likePost(post.$id, likesArray);
+        const newUserData =   await appwriteService.likePost(post.$id, likesArray);  if(newUserData) { dispatch(login(newUserData)) }
     };
 
     const handleSavePost = async () => {
@@ -41,7 +42,7 @@ function PostStats({ post }) {
             savedArray.push(post.$id);
         }
         setSaves(savedArray);
-        await appwriteService.savePost({userId: user.$id, saved: savedArray});
+        const newUserData =  await appwriteService.savePost(user.$id, savedArray);  if(newUserData) { dispatch(login(newUserData)) }
     };
 
     return (

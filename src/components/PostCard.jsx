@@ -4,12 +4,14 @@ import appwriteService from "../appwrite/config";
 import parse from "html-react-parser";
 import { formatDistanceToNow } from "date-fns";
 import { IconContext } from 'react-icons';
-import { FaHeart} from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 
-
-function PostCard({ $id, title, featuredImage, content, likes ,$createdAt , owner }) {
+function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner }) {
     const truncatedContent = content.length > 180 ? `${content.substring(0, 180)}...` : content;
 
+    if (!$id) {
+        return <p>Post not found</p>;
+    }
 
     return (
         <div className="group p-3 w-full rounded-xl overflow-hidden flex flex-col md:flex-row bg-gray-100 dark:bg-[#ecf0f8] border border-black">
@@ -27,10 +29,10 @@ function PostCard({ $id, title, featuredImage, content, likes ,$createdAt , owne
                     </h3>
                     <div className="flex flex-row gap-2 items-center justify-center ">
                         <IconContext.Provider value={{ size: "1.5em" }}>
-                            <FaHeart className="text-red-700" />
+                            <FaHeart className="text-gray-700" />
                         </IconContext.Provider>
                         <span className="text-md dark:text-black-100 text-gray-900">
-                            {likes.length}
+                            {likes ? likes.length : 0}
                         </span>
                     </div>
                 </div>
@@ -44,7 +46,7 @@ function PostCard({ $id, title, featuredImage, content, likes ,$createdAt , owne
                         </p>
                     </Link>
                 </div>
-                <div className="author flex items-center gap-2 mt-2 ">
+                <div className="author flex items-start gap-2 mt-2 ">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="2em"
@@ -53,20 +55,24 @@ function PostCard({ $id, title, featuredImage, content, likes ,$createdAt , owne
                     >
                         {/* SVG path */}
                     </svg>
-                    <h2 className="text-lg tracking-tight text-black dark:text-black text-left">
-                        <span className="text-blacl dark:text-black">
-                            @{owner.name},
-                            {new Date().toLocaleDateString(undefined, {
+                    <div className="text-left">
+                        <h2 className="text-lg tracking-tight text-black dark:text-black">
+                            <span className="text-black dark:text-black">
+                                @{owner.name}
+                            </span>
+                        </h2>
+                        <span className="text-gray-600 dark:text-gray-200">
+                            {new Date($createdAt).toLocaleDateString(undefined, {
                                 month: "long",
                                 day: "numeric",
                             })}
                             {" ("}
-                            {formatDistanceToNow(new Date(), {
+                            {formatDistanceToNow(new Date($createdAt), {
                                 addSuffix: true,
                             })}
                             {")"}
                         </span>
-                    </h2>
+                    </div>
                 </div>
             </div>
         </div>
