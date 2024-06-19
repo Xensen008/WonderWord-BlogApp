@@ -90,11 +90,9 @@ export class AuthService {
 
     async getCurrentUser() {
         try {
-            const currentAccount = this.account.getSession("current")
+            const currentAccount = await this.account.getSession("current")
 
             if (!currentAccount) throw Error;
-
-            console.log(currentAccount)
 
             const currentUser = await this.databases.listDocuments(
                 conf.appwriteDatabaseId,
@@ -115,7 +113,7 @@ export class AuthService {
         try {
           const userInfo = await this.databases.listDocuments(
             conf.appwriteDatabaseId,
-            conf.appwriteUsersCollectionId,
+            conf.appwriteUserCollectionId,
     
             [Query.equal("accountId", userId)]
           );
