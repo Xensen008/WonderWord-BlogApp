@@ -61,7 +61,8 @@ export default function Post() {
                         </div>
                     )}
                 </div>
-                <PostStats post={post} /> {/* Add PostStats component here */}
+                {post && <PostStats post={post} />} {/* Add PostStats component here */}
+            
                 <div className="w-full mb-6">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
