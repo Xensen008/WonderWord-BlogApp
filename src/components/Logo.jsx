@@ -4,7 +4,7 @@ function Logo({ textColor = "primary", darkTextColor = "white" }) {
   return (
     <div className="relative flex items-center ">
       <div>
-        <svg fill="#000000" width="50px" height="50px" viewBox="-6.08 -6.08 44.16 44.16" xmlns="http://www.w3.org/2000/svg">
+        <svg fill="#ffffff" width="50px" height="50px" viewBox="-6.08 -6.08 44.16 44.16" xmlns="http://www.w3.org/2000/svg">
           <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
           <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
           <g id="SVGRepo_iconCarrier">
