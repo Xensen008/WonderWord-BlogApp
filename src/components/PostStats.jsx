@@ -6,17 +6,17 @@ import appwriteService from "../appwrite/config";
 import { login } from "../store/authSlice";
 
 function PostStats({ post }) {
-  const user = useSelector((state) => state.auth.userData);
+  const user = useSelector((state) => state?.auth?.userData);
   const dispatch = useDispatch();
 
-  const likesList = post?.likes?.map((user) => user.$id);
-  const savedList = user?.saved?.map((post) => post.$id);
+  const likesList = post?.likes?.map((user) => user?.$id);
+  const savedList = user?.saved?.map((post) => post?.$id);
 
   const [likes, setLikes] = useState(likesList);
   const [saves, setSaves] = useState(savedList);
 
   const checkIfLiked = (likes, userId) => {
-    return likes && likes.includes(userId) ? true : false;
+    return likes?.includes(userId) ? true : false;
   };
 
   const checkIfSaved = (saves, postId) => {
@@ -34,11 +34,11 @@ function PostStats({ post }) {
     setLikes(likesArray);
     await appwriteService.likePost(post?.$id, likesArray);
   };
-  console.log(user.$id);
+
   const handleSavePost = async () => {
     let savedArray = [...saves];
     if (savedArray.includes(post?.$id)) {
-      savedArray = savedArray.filter((Id) => Id !== post.$id);
+      savedArray = savedArray.filter((Id) => Id !== post?.$id);
     } else {
       savedArray.push(post?.$id);
     }
@@ -55,7 +55,7 @@ function PostStats({ post }) {
       <div className="mr-2">
         <button onClick={handleLikePost}>
           <IconContext.Provider value={{ size: "1.5em" }}>
-            {checkIfLiked(likes, user.$id) ? (
+            {checkIfLiked(likes, user?.$id) ? (
               <FaHeart className="text-red-700" />
             ) : (
               <FaRegHeart className="text-white" />
@@ -63,7 +63,7 @@ function PostStats({ post }) {
           </IconContext.Provider>
         </button>
         <span className="text-md dark:text-white text-white">
-          {checkIfLiked(likes, user.$id) ? "Liked" : "Like"}
+          {checkIfLiked(likes, user?.$id) ? "Liked" : "Like"}
         </span>
       </div>
       <div>
