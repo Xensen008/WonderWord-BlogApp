@@ -81,21 +81,7 @@ export class AuthService {
 
     async login({email, password}) {
         try {
-            const loggedInUser =  await this.account.createEmailPasswordSession(email, password);
-
-            if(!loggedInUser) {
-            console.log("Login Failed :: Login Appwrite");
-                return;
-            }
-
-            const user = await this.getUserInfo(loggedInUser.userId);
-
-            if(!user){
-            console.log("Failed to fetch User Info :: Login :: Appwrite);
-                        return;
-            }
-
-            return user;
+          return await this.account.createEmailPasswordSession(email, password);
         } catch (error) {
             console.log("there is an error :",error)
             throw error;

@@ -11,7 +11,7 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
     const [showSharePopup, setShowSharePopup] = useState(false);
     const truncatedContent = content?.length > 180 ? `${content.substring(0, 280)}...` : content;
 
-    const postUrl = `https://wonderword-blog-app.vercel.app/${$id}`; // replace with the URL pattern of your posts
+    const postUrl = `https://wonderword-blog-app.vercel.app/post/${$id}`; // replace with the URL pattern of your posts
     const shareTitle = title; // replace with the title of the post
 
     const copyToClipboard = () => {
