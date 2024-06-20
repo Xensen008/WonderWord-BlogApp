@@ -48,7 +48,7 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                         </Link>
                     </div>
                     <div className="author flex items-center -ml-3 my-3">
-                        <h2 className="text-lg tracking-tight text-gray-800 dark:text-neutral-100 font-bold text-left">
+                        <div className="text-lg tracking-tight text-gray-800 dark:text-neutral-100 font-bold text-left">
                             By {owner?.name}
                             <br></br>
                             <span className="text-gray-600 dark:text-gray-200">
@@ -62,7 +62,7 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                                 })}
                                 {")"}
                             </span>
-                        </h2>
+                        </div>
                     </div>
                 </div>
             </div>
