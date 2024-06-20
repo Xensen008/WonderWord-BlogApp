@@ -1,28 +1,36 @@
-import React, { useEffect } from 'react'
-import { Container, PostCard } from '../components'
-import { useSelector, useDispatch } from 'react-redux'
-import {setSavedPosts}  from '../store/postSlice'
+import React, { useState, useEffect } from 'react';
+import { Container, PostCard } from '../components';
+import { useSelector, useDispatch } from 'react-redux';
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 function SavedPage() {
-    const dispatch = useDispatch();
-    const savedPosts = useSelector((state) => state.posts.savedPosts);
+    const [loading, setLoading] = useState(true);
+    const savedPosts = useSelector((state) => state.auth?.userData?.saved);
 
     useEffect(() => {
-        let savedArray = JSON.parse(localStorage.getItem('savedPosts')) || []
-
-        if(savedArray.length > 0){
-            dispatch(setSavedPosts(savedArray));
+        if (savedPosts) {
+            setLoading(false);
         }
+    }, [savedPosts]);
 
-        localStorage.setItem('savedPosts', JSON.stringify(savedPosts))
-    }, [savedPosts, dispatch]);
+    if (loading) {
+        return <LoadingSpinner />;
+    }
+
+    if (!savedPosts || savedPosts?.length === 0) {
+        return (
+            <div className="text-2xl font-bold text-center mt-8 mb-16">
+                No post have been Saved
+            </div>
+        );
+    }
 
     return (
         <div className='w-full py-8'>
             <Container>
                 <div className='flex flex-wrap'>
-                    {savedPosts.map((post) => (
-                        <div key={post.$id} className='p-2 sm:w-full md:w-1/2 lg:w-1/3 xl:w-1/4'>
+                    {savedPosts && savedPosts.map((post) => (
+                        <div key={post?.$id} className='p-2 w-full'>
                             <PostCard {...post} />
                         </div>
                     ))}
@@ -31,4 +39,5 @@ function SavedPage() {
         </div>
     )
 }
-export default SavedPage
+
+export default SavedPage;

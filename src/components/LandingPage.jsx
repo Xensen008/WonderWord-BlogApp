@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 function Landingpage() {
   return (
-    <div className="bg-white text-black">
+    <div className="bg-gray-900 text-white">
       <div className="max-w-screen-xl px-8 mx-auto flex flex-col lg:flex-row items-center">
         <div className="flex flex-col  w-full lg:w-6/12 justify-center lg:pt-24 pt-5 items-start text-center lg:text-left mb-5 md:mb-0">
           <h1 className="my-4 text-5xl font-bold leading-tight text-primary dark:text-dark-primary">

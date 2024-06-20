@@ -31,7 +31,7 @@ function Header() {
       active: !authStatus,
     },
     {
-      name: "Save-post",
+      name: "Saved",
       slug: "/saved-posts",
       active: authStatus,
     },
@@ -43,7 +43,7 @@ function Header() {
   ];
 
   return (
-    <header className="py-3 shadow bg-white text-black">
+    <header className="py-3 shadow bg-gray-900 text-white">
       <Container>
         <nav className="flex">
           <div className="mr-4">
