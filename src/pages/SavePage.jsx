@@ -6,10 +6,10 @@ function SavedPage() {
     const savedPosts = useSelector((state) => state.auth.userData.saved);
 
     if(!savedPosts || savedPosts.length === 0){
-        return <div>
-            No post have been Saved
-        </div>
-    }
+    return <div className="text-2xl font-bold text-center mt-8 mb-16">
+        No post have been Saved
+    </div>
+}
 
     return (
         <div className='w-full py-8'>
