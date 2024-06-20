@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import appwriteService from "../appwrite/config";
 import parse from "html-react-parser";
 import { formatDistanceToNow } from "date-fns";
 import { IconContext } from 'react-icons';
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShareAlt, FaCopy } from "react-icons/fa";
+import { FacebookShareButton, TwitterShareButton, WhatsappShareButton, FacebookIcon, TwitterIcon, WhatsappIcon } from 'react-share';
 
 function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner }) {
+    const [showSharePopup, setShowSharePopup] = useState(false);
     const truncatedContent = content?.length > 180 ? `${content.substring(0, 280)}...` : content;
+
+    const postUrl = `https://wonderword-blog-app.vercel.app/${$id}`; // replace with the URL pattern of your posts
+    const shareTitle = title; // replace with the title of the post
+
+    const copyToClipboard = () => {
+        navigator.clipboard.writeText(postUrl);
+        alert('Link copied to clipboard');
+    };
 
     if (!$id) {
         return <p className="text-2xl font-bold text-center mt-8">Post not found</p>;
     }
+
 
     return (
         <>
@@ -35,8 +46,40 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                             <span className="text-md dark:text-neutral-100 text-gray-900">
                                 {likes?.length || 0}
                             </span>
+                            <IconContext.Provider value={{ size: "1.5em" }}>
+                                <FaShareAlt onClick={() => setShowSharePopup(!showSharePopup)} className="text-gray-500 dark:text-gray-200 cursor-pointer" />
+                            </IconContext.Provider>
                         </div>
                     </div>
+                    {showSharePopup && (
+                        <div className="share-popup">
+                            <FacebookShareButton
+                                url={postUrl}
+                                quote={shareTitle}
+                                className="share-button"
+                                onClick={(e) => { e.preventDefault(); window.open(postUrl, '_blank'); }}
+                            >
+                                <FacebookIcon size={32} round />
+                            </FacebookShareButton>
+                            <TwitterShareButton
+                                url={postUrl}
+                                title={shareTitle}
+                                className="share-button"
+                                onClick={(e) => { e.preventDefault(); window.open(postUrl, '_blank'); }}
+                            >
+                                <TwitterIcon size={32} round />
+                            </TwitterShareButton>
+                            <WhatsappShareButton
+                                url={postUrl}
+                                title={shareTitle}
+                                className="share-button"
+                                onClick={(e) => { e.preventDefault(); window.open(postUrl, '_blank'); }}
+                            >
+                                <WhatsappIcon size={32} round />
+                            </WhatsappShareButton>
+                            <FaCopy onClick={copyToClipboard} size={32} className="share-button cursor-pointer" />
+                        </div>
+                    )}
                     <div className="min-h-[6rem]">
                         <p className="mt-3 text-gray-600 dark:text-neutral-300 text-left">
                             {parse(truncatedContent)}
