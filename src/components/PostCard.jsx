@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons';
 import { FaHeart } from "react-icons/fa";
 
 function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner }) {
-    const truncatedContent = content.length > 180 ? `${content.substring(0, 480)}...` : content;
+    const truncatedContent = content?.length > 180 ? `${content.substring(0, 480)}...` : content;
 
     if (!$id) {
         return <p className="text-2xl font-bold text-center mt-8">Post not found</p>;
@@ -33,7 +33,7 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                                 <FaHeart className="text-gray-500 dark:text-gray-200" />
                             </IconContext.Provider>
                             <span className="text-md dark:text-neutral-100 text-gray-900">
-                                {likes ? likes.length : 0}
+                                {likes?.length || 0}
                             </span>
                         </div>
                     </div>
@@ -49,7 +49,7 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                     </div>
                     <div className="author flex items-center -ml-3 my-3">
                         <h2 className="text-lg tracking-tight text-gray-800 dark:text-neutral-100 font-bold text-left">
-                            By {owner.name}
+                            By {owner?.name}
                             <br></br>
                             <span className="text-gray-600 dark:text-gray-200">
                                 {new Date($createdAt).toLocaleDateString(undefined, {

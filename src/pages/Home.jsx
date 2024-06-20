@@ -7,11 +7,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setPosts } from '../store/postSlice';
 
 function Home() {
-    const posts = useSelector(state => state.posts.posts);
+    const posts = useSelector(state => state.posts?.posts);
     const [isLoading, setIsLoading] = useState(true); // Add isLoading state
     const dispatch = useDispatch();
-    const authStatus = useSelector(state => state.auth.status)
-
+    const authStatus = useSelector(state => state.auth?.status)
 
     useEffect(() => {
         appwriteService.getPosts().then((post) => {
@@ -26,7 +25,7 @@ function Home() {
         return <LoadingSpinner />; // Render LoadingSpinner if isLoading is true
     }
 
-    if (posts.length === 0) {
+    if (posts?.length === 0) {
         return <LandingPage />
     }
 
@@ -38,7 +37,7 @@ function Home() {
             <Container>
                 <div className='flex flex-wrap'>
                     <h1 className="text-2xl font-bold text-center mb-8">All Posts</h1>
-                    {posts.map((post) => (
+                    {posts?.map((post) => (
                         <div key={post.$id} className='p-2 w-full'>
                             <PostCard {...post} />
                         </div>
