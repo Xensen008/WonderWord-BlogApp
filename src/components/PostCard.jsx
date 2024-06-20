@@ -7,7 +7,7 @@ import { IconContext } from 'react-icons';
 import { FaHeart } from "react-icons/fa";
 
 function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner }) {
-    const truncatedContent = content?.length > 180 ? `${content.substring(0, 480)}...` : content;
+    const truncatedContent = content?.length > 180 ? `${content.substring(0, 280)}...` : content;
 
     if (!$id) {
         return <p className="text-2xl font-bold text-center mt-8">Post not found</p>;
