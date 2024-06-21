@@ -23,22 +23,31 @@ export class Service {
     userId,
     owner,
   }) {
-    try {
-      return await this.databases.createDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
-        slug,
-        {
-          title,
-          content,
-          featuredImage,
-          status,
-          userId,
-          owner,
+    let attempts = 0;
+    while (attempts < 3) {
+      try {
+        return await this.databases.createDocument(
+          conf.appwriteDatabaseId,
+          conf.appwriteCollectionId,
+          slug,
+          {
+            title,
+            content,
+            featuredImage,
+            status,
+            userId,
+            owner,
+          }
+        );
+      } catch (error) {
+        console.log(`Appwrite service :: createPost :: error :: attempt ${attempts + 1}`, error);
+        attempts++;
+        if (attempts < 3) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // wait for 1 second before retrying
+        } else {
+          return false;
         }
-      );
-    } catch (error) {
-      console.log("Appwrite serive :: createPost :: error", error);
+      }
     }
   }
 
@@ -61,16 +70,24 @@ export class Service {
   }
 
   async deletePost(slug) {
-    try {
-      await this.databases.deleteDocument(
-        conf.appwriteDatabaseId,
-        conf.appwriteCollectionId,
-        slug
-      );
-      return true;
-    } catch (error) {
-      console.log("Appwrite serive :: deletePost :: error", error);
-      return false;
+    let attempts = 0;
+    while (attempts < 3) {
+      try {
+        await this.databases.deleteDocument(
+          conf.appwriteDatabaseId,
+          conf.appwriteCollectionId,
+          slug
+        );
+        return true;
+      } catch (error) {
+        console.log(`Appwrite service :: deletePost :: error :: attempt ${attempts + 1}`, error);
+        attempts++;
+        if (attempts < 3) {
+          await new Promise(resolve => setTimeout(resolve, 1000)); // wait for 1 second before retrying
+        } else {
+          return false;
+        }
+      }
     }
   }
 

@@ -11,10 +11,11 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
       <Controller
         name={name || "content"}
         control={control}
-        render={({ field: { onChange } }) => (
+        render={({ field: { onChange, value } }) => (
           <Editor
-            apiKey= 'w7g8at2bg7ect6aemn6xq0nbu3x095unzf3r95va5zeo9pcz' 
+            apiKey='w7g8at2bg7ect6aemn6xq0nbu3x095unzf3r95va5zeo9pcz'
             initialValue={defaultValue}
+            value={value}
             init={{
               initialValue: defaultValue,
               height: 500,
@@ -45,7 +46,20 @@ export default function RTE({ name, control, label, defaultValue = "" }) {
                 "undo redo | blocks | image | bold italic forecolor | alignleft aligncenter bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent |removeformat | help",
               content_style: "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }"
             }}
-            onEditorChange={onChange}
+            onEditorChange={(content, editor) => {
+              if (content.length > 3000) {
+                // If the content is too long, undo the last change
+                editor.undoManager.undo();
+
+                // Show a warning message
+                editor.notificationManager.open({
+                  text: '3000 Character limit reached',
+                  type: 'warning'
+                });
+              } else {
+                onChange(content);
+              }
+            }}
           />
         )}
       />

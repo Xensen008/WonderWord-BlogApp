@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 export default function PostForm({ post }) {
-    const { register, handleSubmit, watch, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, watch, setValue, control, getValues, formState: { isSubmitting } } = useForm({
         defaultValues: {
             title: post?.title || "",
             slug: post?.$id || "",
@@ -145,10 +145,11 @@ export default function PostForm({ post }) {
                     </div>
 
                     <Button
+                        disabled={isSubmitting}
                         type="submit"
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     >
-                        {post ? "Update" : "Submit"}
+                        {isSubmitting ? (post ? "Updating..." : "Creating...") : (post ? "Update" : "Submit")}
                     </Button>
                 </div>
             </form>

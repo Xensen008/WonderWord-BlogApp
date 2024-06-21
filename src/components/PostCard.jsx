@@ -85,9 +85,9 @@ function PostCard({ $id, title, featuredImage, content, likes, $createdAt, owner
                             {parse(truncatedContent)}
                         </p>
                         <Link to={`/post/${$id}`} >
-                            <p className="inline-flex items-center gap-x-1 dark:text-blue-300  text-blue-600 decoration-2 hover:underline font-medium text-left">
+                            <div className="inline-flex items-center gap-x-1 dark:text-blue-300  text-blue-600 decoration-2 hover:underline font-medium text-left">
                                 Read more {">"}
-                            </p>
+                            </div>
                         </Link>
                     </div>
                     <div className="author flex items-center -ml-3 my-3">
